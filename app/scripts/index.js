@@ -4,22 +4,18 @@ require('../styles/style.scss');
 import React from 'react';
 import ReactDOM from 'react-dom';
 // components
-import Counter from './components/Counter';
+import Todos from './components/Todos';
 // redux
 import { createStore } from 'redux';
-import counter from './reducers';
+import todos from './reducers';
 
 const rootElement = document.getElementById('app');
 // specify store reducer
-const store = createStore(counter);
+const store = createStore(todos);
 
 function render() {
   ReactDOM.render(
-    <Counter
-      value={store.getState()}
-      onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
-      onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
-    />,
+    <Todos />,
     rootElement
   );
 }
