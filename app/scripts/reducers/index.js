@@ -1,3 +1,5 @@
+import expect, { createSpy, spyOn, isSpy } from 'expect';
+
 // counter reducer
 export default function counter(state = 0, action) {
   switch (action.type) {
@@ -12,3 +14,27 @@ export default function counter(state = 0, action) {
     }
   }
 }
+
+expect(
+  counter(0, { type: 'INCREMENT' })
+).toEqual(1);
+
+expect(
+  counter(1, { type: 'INCREMENT' })
+).toEqual(2);
+
+expect(
+  counter(2, { type: 'DECREMENT' })
+).toEqual(1);
+
+expect(
+  counter(1, { type: 'DECREMENT' })
+).toEqual(0);
+
+expect(
+  counter(0, { type: 'RANDOM_ACTION' })
+).toEqual(0);
+
+expect(
+  counter(undefined, {})
+).toEqual(0);
