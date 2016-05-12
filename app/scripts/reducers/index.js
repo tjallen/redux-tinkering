@@ -1,38 +1,44 @@
-// todos / todo combined reducer
-// to be separated out later
-export default function todos(state = [], action) {
+// individual todo reducer
+export function todo(state, action) {
   switch (action.type) {
-    case 'ADD_TODO': {
+    case 'ADD_TODO':
+      return {
+        id: action.id,
+        text: action.text,
+        completed: false,
+      };
+    case 'TOGGLE_TODO':
+      if (state.id !== action.id) {
+        return state;
+      }
+      return Object.assign({}, state, {
+        completed: !state.completed,
+      });
+    default:
+      return state;
+  }
+}
+
+// all todos reducer
+export function todos(state = [], action) {
+  switch (action.type) {
+    case 'ADD_TODO':
       return [
-        // return the original array of todos
         ...state,
-        // with a new todo specified by the action
         {
           id: action.id,
           text: action.text,
           completed: false,
         },
       ];
-    }
-    case 'TOGGLE_TODO': {
-      // iterate over todos
-      return state.map(todo => {
-        // if todo doesn't match action id, return as normal
-        if (todo.id !== action.id) {
-          return todo;
-        }
-        // but if it matches id, return a new state object
-        return {
-          // with original properties
-          ...todo,
-          // but we invert completed to toggle
-          completed: !todo.completed,
-        };
-      });
-    }
+    case 'TOGGLE_TODO':
+      return state.map(t =>
+        todo(t, action)
+      );
     default: {
       return state;
     }
   }
 }
 
+export default todos;
