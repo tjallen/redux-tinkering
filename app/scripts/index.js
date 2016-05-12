@@ -10,6 +10,7 @@ import { createStore } from 'redux';
 import counter from './reducers';
 
 const rootElement = document.getElementById('app');
+// specify store reducer
 const store = createStore(counter);
 
 function render() {
@@ -23,5 +24,7 @@ function render() {
   );
 }
 
+// initial render
 render();
+// register callback for store to call when action is dispatched
 store.subscribe(render);

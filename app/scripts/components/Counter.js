@@ -6,10 +6,6 @@ export default class Counter extends Component {
     onIncrement: PropTypes.func.isRequired,
     onDecrement: PropTypes.func.isRequired,
   }
-/* not used yet
-  constructor(props) {
-    super(props);
-  }*/
   render() {
     const { value, onIncrement, onDecrement } = this.props;
     return (
