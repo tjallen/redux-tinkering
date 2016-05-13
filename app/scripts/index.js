@@ -4,18 +4,21 @@ require('../styles/style.scss');
 import React from 'react';
 import ReactDOM from 'react-dom';
 // components
-import Todos from './components/Todos';
+import TodoApp from './components/TodoApp';
 // redux
 import { createStore } from 'redux';
-import todos from './reducers';
+import { Provider } from 'react-redux';
+import todoApp from './reducers';
 
 const rootElement = document.getElementById('app');
 // specify store reducer
-const store = createStore(todos);
+const store = createStore(todoApp);
 
 function render() {
   ReactDOM.render(
-    <Todos />,
+    <Provider store={store}>
+      <TodoApp todos={store.getState().todos} />
+    </Provider>,
     rootElement
   );
 }
@@ -24,3 +27,5 @@ function render() {
 render();
 // register callback for store to call when action is dispatched
 store.subscribe(render);
+
+export default store;
