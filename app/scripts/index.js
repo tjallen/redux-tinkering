@@ -64,6 +64,39 @@ const getVisibleTodos = (
   }
 };
 
+// single todo presentational component
+const Todo = ({
+  // props
+  text,
+  onClick,
+  completed,
+}) => (
+  <li
+    onClick={onClick}
+    style={{
+      textDecoration: completed ? 'line-through' : 'none',
+    }}
+  >
+    {text}
+  </li>
+);
+
+// container component
+const TodoList = ({
+  todos,
+  onTodoClick,
+}) => (
+  <ul>
+    {todos.map(todo =>
+      <Todo
+        key={todo.id}
+        {...todo}
+        onClick={() => onTodoClick(todo.id)}
+      />
+    )}
+  </ul>
+);
+
 // todoapp component for extract later
 let nextTodoId = 0;
 
@@ -99,23 +132,17 @@ class TodoApp extends Component {
         >
         Add
         </button>
+        <TodoList
+          todos={visibleTodos}
+          onTodoClick={id =>
+            store.dispatch({
+              type: 'TOGGLE_TODO',
+              id,
+            })
+          }
+        />
         <ul>
-          {visibleTodos.map(todo =>
-            <li
-              key={todo.id}
-              onClick={() => {
-                store.dispatch({
-                  type: 'TOGGLE_TODO',
-                  id: todo.id,
-                });
-              }}
-              style={{
-                textDecoration: todo.completed ? 'line-through' : 'none',
-              }}
-            >
-              {todo.text}
-            </li>
-          )}
+
         </ul>
         <p>
           Display:
